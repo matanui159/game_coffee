@@ -16,9 +16,9 @@ function GameScene:new()
 	}
 end
 
-function GameScene:update(dt)
-	self.players[1]:update(dt)
-	self.players[2]:update(dt)
+function GameScene:update()
+	self.players[1]:update()
+	self.players[2]:update()
 end
 
 function GameScene:draw()

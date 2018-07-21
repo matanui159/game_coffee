@@ -2,14 +2,16 @@ local Coffee = Object:extend()
 
 function Coffee:new(y)
 	self.level = 0
+	self.width = 12
+	self.height = 7
 	self.x = 80
-	self.y = y + 7
+	self.y = y + self.height
 
 	self.mesh = love.graphics.newMesh({
 		{self.x, self.y},
-		{self.x + 12, self.y},
-		{self.x + 12, self.y + 7},
-		{self.x, self.y + 7}
+		{self.x + self.width, self.y},
+		{self.x + self.width, self.y + self.height},
+		{self.x, self.y + self.height}
 	})
 end
 
@@ -23,13 +25,13 @@ end
 
 function Coffee:update()
 	self.level = self.level * 0.9
-	local offset = math.sin(love.timer.getTime() * 3) * self.level * 7
+	local offset = math.sin(love.timer.getTime() * 3) * self.level * self.height
 	self.mesh:setVertices({
 		{self.x, self.y + offset},
-		{self.x + 12, self.y - offset}
+		{self.x + self.width, self.y - offset}
 	})
 
-	return math.abs(offset) > 6
+	return math.abs(offset) > (self.height * 0.8)
 end
 
 function Coffee:draw()

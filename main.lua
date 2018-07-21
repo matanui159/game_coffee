@@ -5,6 +5,7 @@ HEIGHT = 48
 SCALE  = 8
 
 local GameScene = require("scenes.GameScene")
+local timer = 0
 local canvas
 
 function love.load()
@@ -14,7 +15,11 @@ function love.load()
 end
 
 function love.update(dt)
-	scene:update(dt)
+	timer = timer + dt
+	while timer > 0.1 do
+		scene:update()
+		timer = timer - 0.1
+	end
 end
 
 function love.draw()

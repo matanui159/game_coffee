@@ -11,25 +11,20 @@ function Player:new(key, coffee, y)
 
 	self.key = key
 	self.coffee = coffee
-	self.timer = 0
 	self.x = 2
 	self.y = y
 end
 
-function Player:update(dt)
-	self.timer = self.timer + dt
-	if self.timer > 0.1 then
-		if love.keyboard.isDown(self.key) or self.x % 2 ~= 0 then
-			self.coffee:force(self.x)
-			self.x = self.x + 1
-			if self.x > 55 then
-				print(self.key .. " win")
-			end
+function Player:update()
+	if love.keyboard.isDown(self.key) or self.x % 2 ~= 0 then
+		self.coffee:force(self.x)
+		self.x = self.x + 1
+		if self.x > 55 then
+			print(self.key .. " win")
 		end
-		if self.coffee:update() then
-			print(self.key .. " lose")
-		end
-		self.timer = 0
+	end
+	if self.coffee:update() then
+		print(self.key .. " lose")
 	end
 end
 
