@@ -1,7 +1,9 @@
 local Coffee = Object:extend()
 
 function Coffee:new(y)
-	self.level = 0
+	self.vel = 0
+	self.offset = 0
+
 	self.width = 12
 	self.height = 7
 	self.x = 80
@@ -16,22 +18,23 @@ function Coffee:new(y)
 end
 
 function Coffee:force(x)
-	local force = x / 300 * (self.level + 1)
-	self.level = self.level + force
-	if self.level > 1 then
-		self.level = 1
-	end
+	self.vel = self.vel - (1 + x / 50) / 20
 end
 
 function Coffee:update()
-	self.level = self.level * 0.9
-	local offset = math.sin(love.timer.getTime() * 3) * self.level * self.height
+	self.vel = self.vel - self.offset / 10
+	self.vel = self.vel * 0.9
+	self.offset = self.offset + self.vel
+	if self.offset < -1 then
+		self.offset = -1
+	end
+
 	self.mesh:setVertices({
-		{self.x, self.y + offset},
-		{self.x + self.width, self.y - offset}
+		{self.x, self.y + self.offset * self.height},
+		{self.x + self.width, self.y - self.offset * self.height}
 	})
 
-	return math.abs(offset) > (self.height * 0.8)
+	return self.offset < -0.8
 end
 
 function Coffee:draw()
