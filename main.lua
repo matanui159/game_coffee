@@ -1,8 +1,5 @@
+require("conf")
 Object = require("classic")
-
-WIDTH  = 96
-HEIGHT = 48
-SCALE  = 8
 
 local GameScene = require("scenes.GameScene")
 local timer = 0

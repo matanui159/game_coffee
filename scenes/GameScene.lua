@@ -1,3 +1,5 @@
+local Particles = require("fx.Particles")
+
 local Player = require("game.Player")
 local Coffee = require("game.Coffee")
 
@@ -10,21 +12,28 @@ function GameScene:new()
 		GameScene.load = true
 	end
 
+	self.particles = Particles()
 	self.players = {
 		Player("lctrl", Coffee(12), 16),
 		Player("rctrl", Coffee(30), 32)
 	}
 end
 
+function GameScene:addParticle(x, y, r, g, b, life)
+	self.particles:addParticle(x, y, r, g, b, life)
+end
+
 function GameScene:update()
-	self.players[1]:update()
-	self.players[2]:update()
+	self.particles:update()
+	self.players[1]:update(self.players[2])
+	self.players[2]:update(self.players[1])
 end
 
 function GameScene:draw()
 	love.graphics.draw(GameScene.bg)
 	self.players[1]:draw()
 	self.players[2]:draw()
+	self.particles:draw()
 	love.graphics.draw(GameScene.fg)
 	self.players[1].coffee:draw()
 	self.players[2].coffee:draw()
