@@ -30,7 +30,7 @@ function Player:update(other)
 		local r = 0.0
 		local g = 0.4
 		local b = 0.8
-		local life = 8
+		local life = 5
 		if self.cry % 4 == 0 then
 			scene:addParticle(self.x + 7, y, r, g, b, life)
 		elseif self.cry % 4 == 2 then
