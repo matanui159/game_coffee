@@ -34,7 +34,7 @@ function Coffee:update()
 		{self.x + self.width, self.y - self.offset * self.height}
 	})
 
-	return self.offset < -0.8
+	return self.offset < -0.9
 end
 
 function Coffee:draw()

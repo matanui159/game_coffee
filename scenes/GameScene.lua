@@ -11,6 +11,11 @@ function GameScene:new()
 		GameScene.fg = love.graphics.newImage("assets/fg.png")
 		GameScene.logo = love.graphics.newImage("assets/logo.png")
 		GameScene.tut = love.graphics.newImage("assets/tut.png")
+
+		GameScene.music = {}
+		GameScene.music.start = love.audio.newSource("assets/music/start.mp3", "stream")
+		GameScene.music.play = love.audio.newSource("assets/music/play.mp3", "stream")
+
 		GameScene.load = true
 	end
 
@@ -29,6 +34,14 @@ function GameScene:update()
 	self.particles:update()
 	self.players[1]:update(self.players[2])
 	self.players[2]:update(self.players[1])
+
+	if self.players[1].x == 2 and self.players[2].x == 2 then
+		GameScene.music.play:stop()
+		GameScene.music.start:play()
+	else
+		GameScene.music.start:stop()
+		GameScene.music.play:play()
+	end
 end
 
 function GameScene:draw()
@@ -40,6 +53,7 @@ function GameScene:draw()
 	love.graphics.draw(GameScene.fg)
 	self.players[1].coffee:draw()
 	self.players[2].coffee:draw()
+
 	if self.players[1].x == 2 and self.players[2].x == 2 then
 		love.graphics.draw(GameScene.tut)
 	end
