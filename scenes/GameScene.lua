@@ -9,13 +9,15 @@ function GameScene:new()
 	if not GameScene.load then
 		GameScene.bg = love.graphics.newImage("assets/bg.png")
 		GameScene.fg = love.graphics.newImage("assets/fg.png")
+		GameScene.logo = love.graphics.newImage("assets/logo.png")
+		GameScene.tut = love.graphics.newImage("assets/tut.png")
 		GameScene.load = true
 	end
 
 	self.particles = Particles()
 	self.players = {
-		Player("lctrl", Coffee(12), 16),
-		Player("rctrl", Coffee(30), 32)
+		Player(GameScene, "lctrl", Coffee(12), 16),
+		Player(GameScene, "rctrl", Coffee(30), 32)
 	}
 end
 
@@ -31,12 +33,16 @@ end
 
 function GameScene:draw()
 	love.graphics.draw(GameScene.bg)
+	love.graphics.draw(GameScene.logo)
 	self.players[1]:draw()
 	self.players[2]:draw()
 	self.particles:draw()
 	love.graphics.draw(GameScene.fg)
 	self.players[1].coffee:draw()
 	self.players[2].coffee:draw()
+	if self.players[1].x == 2 and self.players[2].x == 2 then
+		love.graphics.draw(GameScene.tut)
+	end
 end
 
 return GameScene

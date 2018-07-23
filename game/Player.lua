@@ -1,6 +1,8 @@
+local TransitionScene = require("scenes.TransitionScene")
+
 local Player = Object:extend()
 
-function Player:new(key, coffee, y)
+function Player:new(gamescene, key, coffee, y)
 	if not Player.load then
 		Player.walk = {
 			love.graphics.newImage("assets/player/walk1.png"),
@@ -14,6 +16,7 @@ function Player:new(key, coffee, y)
 		Player.load = true
 	end
 
+	self.gamescene = gamescene
 	self.key = key
 	self.coffee = coffee
 	self.x = 2
@@ -21,6 +24,7 @@ function Player:new(key, coffee, y)
 	self.win = false
 	self.lose = false
 	self.cry = 0
+	self.wintime = 0
 end
 
 function Player:update(other)
@@ -47,6 +51,11 @@ function Player:update(other)
 				math.random(),
 				14
 			)
+
+			self.wintime = self.wintime + 1
+			if self.wintime > 10 and not scene:is(TransitionScene) then
+				scene = TransitionScene(self.gamescene())
+			end
 		end
 
 		if self.win or love.keyboard.isDown(self.key) or self.x % 2 ~= 0 then
@@ -76,13 +85,6 @@ function Player:draw()
 	else
 		love.graphics.draw(Player.walk[self.x % 2 + 1], self.x, self.y)
 	end
-end
-
-function Player:drawCoffee()
-	local height = 7 + 7 * self.coffee.level
-	love.graphics.setColor(0.45, 0.15, 0.05)
-	love.graphics.rectangle("fill", self.coffee.x, self.coffee.y - height, 12, height)
-	love.graphics.setColor(1, 1, 1)
 end
 
 return Player
