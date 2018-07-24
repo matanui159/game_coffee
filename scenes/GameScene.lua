@@ -21,8 +21,8 @@ function GameScene:new()
 
 	self.particles = Particles()
 	self.players = {
-		Player(GameScene, "lctrl", Coffee(12), 16),
-		Player(GameScene, "rctrl", Coffee(30), 32)
+		Player(GameScene, "space", Coffee(12), 16),
+		Player(GameScene, "return", Coffee(30), 32)
 	}
 end
 
