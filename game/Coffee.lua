@@ -25,16 +25,18 @@ function Coffee:update()
 	self.vel = self.vel - self.offset / 10
 	self.vel = self.vel * 0.9
 	self.offset = self.offset + self.vel
-	if self.offset < -1 then
-		self.offset = -1
+
+	local low = self.y - self.offset * self.height
+	if low > self.y + self.height then
+		low = self.y + self.height
 	end
 
 	self.mesh:setVertices({
 		{self.x, self.y + self.offset * self.height},
-		{self.x + self.width, self.y - self.offset * self.height}
+		{self.x + self.width, low}
 	})
 
-	return self.offset < -0.9
+	return self.offset < -1
 end
 
 function Coffee:draw()
