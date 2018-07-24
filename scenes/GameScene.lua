@@ -5,11 +5,12 @@ local Coffee = require("game.Coffee")
 
 local GameScene = Object:extend()
 
-function GameScene:new()
+function GameScene:new(first)
 	if not GameScene.load then
 		GameScene.bg = love.graphics.newImage("assets/bg.png")
 		GameScene.fg = love.graphics.newImage("assets/fg.png")
 		GameScene.logo = love.graphics.newImage("assets/logo.png")
+		GameScene.egg = love.graphics.newImage("assets/egg.png")
 		GameScene.tut = love.graphics.newImage("assets/tut.png")
 
 		GameScene.music = {}
@@ -24,6 +25,12 @@ function GameScene:new()
 		Player(GameScene, "space", Coffee(12), 16),
 		Player(GameScene, "return", Coffee(30), 32)
 	}
+
+	if not first and math.random(1, 4) == 1 then
+		self.egg = true
+	else
+		self.egg = false
+	end
 end
 
 function GameScene:addParticle(x, y, r, g, b, life)
@@ -53,7 +60,12 @@ end
 
 function GameScene:draw()
 	love.graphics.draw(GameScene.bg)
-	love.graphics.draw(GameScene.logo)
+	if self.egg then
+		love.graphics.draw(GameScene.egg)
+	else
+		love.graphics.draw(GameScene.logo)
+	end
+
 	self.players[1]:draw()
 	self.players[2]:draw()
 	self.particles:draw()

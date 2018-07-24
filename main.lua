@@ -6,9 +6,10 @@ local timer = 0
 local canvas
 
 function love.load()
+	math.randomseed(love.timer.getTime())
 	love.graphics.setDefaultFilter("nearest")
 	canvas = love.graphics.newCanvas(WIDTH, HEIGHT, {msaa = 4})
-	scene = GameScene()
+	scene = GameScene(true)
 end
 
 function love.update(dt)

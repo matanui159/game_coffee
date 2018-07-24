@@ -13,6 +13,7 @@ function Player:new(gamescene, key, coffee, y)
 			love.graphics.newImage("assets/player/win2.png")
 		}
 		Player.lose = love.graphics.newImage("assets/player/lose.png")
+		Player.egg = love.graphics.newImage("assets/player/egg.png")
 		Player.load = true
 	end
 
@@ -84,6 +85,17 @@ function Player:draw()
 		love.graphics.draw(Player.lose, self.x, self.y)
 	else
 		love.graphics.draw(Player.walk[self.x % 2 + 1], self.x, self.y)
+	end
+
+	if scene.egg then
+		love.graphics.push()
+		if self.lose then
+			love.graphics.translate(1, 1)
+		elseif self.x % 2 ~= 0 then
+			love.graphics.translate(0, -1)
+		end
+		love.graphics.draw(Player.egg, self.x, self.y)
+		love.graphics.pop()
 	end
 end
 
