@@ -35,12 +35,19 @@ function GameScene:update()
 	self.players[1]:update(self.players[2])
 	self.players[2]:update(self.players[1])
 
+	local music = GameScene.music
 	if self.players[1].x == 2 and self.players[2].x == 2 then
-		GameScene.music.play:stop()
-		GameScene.music.start:play()
+		music.play:stop()
+		if not music.start:isPlaying() then
+			music.start:seek(math.random(1, 120))
+			music.start:play()
+		end
 	else
-		GameScene.music.start:stop()
-		GameScene.music.play:play()
+		music.start:stop()
+		if not music.play:isPlaying() then
+			music.play:seek(math.random(1, 240))
+			music.play:play()
+		end
 	end
 end
 
