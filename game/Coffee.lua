@@ -18,7 +18,7 @@ function Coffee:new(y)
 end
 
 function Coffee:force(x)
-	self.vel = self.vel - (1 + x / 28) / 20
+	self.vel = self.vel - (1 + x / 27) / 20
 end
 
 function Coffee:update()
